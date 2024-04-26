@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop File Upload</title>
+<style>
+  #drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+
+  #drop-zone.drag-over {
+    background-color: #f0f0f0;
+  }
+
+  #file-input {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="drop-zone" 
+     ondragover="handleDragOver(event)" 
+     ondragleave="handleDragLeave(event)" 
+     ondrop="handleDrop(event)">
+  <p>Drag & Drop files here<br>(or click to select)</p>
+  <input type="file" id="file-input" onchange="handleFileSelect(event)">
+</div>
+
+<script>
+  function handleDragOver(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.target.classList.add('drag-over');
+  }
+
+  function handleDragLeave(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.target.classList.remove('drag-over');
+  }
+
+  function handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.target.classList.remove('drag-over');
+
+    const files = event.dataTransfer.files;
+    handleFiles(files);
+  }
+
+  function handleFileSelect(event) {
+    const files = event.target.files;
+    handleFiles(files);
+  }
+
+  function handleFiles(files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      console.log('File:', file.name);
+      // Do whatever you want with the file, e.g., upload it to a server
+    }
+  }
+</script>
+
+</body>
+</html>

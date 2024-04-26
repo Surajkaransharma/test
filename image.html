@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop Image</title>
+
+</head>
+<body>
+
+<div id="drop-zone">Drag & Drop Image Here <input type="file" id="imageunput"/> </div>
+<style>
+    #drop-zone {
+        width: 300px;
+        height: 200px;
+        border: 2px dashed #ccc;
+        border-radius: 5px;
+        text-align: center;
+        padding: 20px;
+        margin: 20px auto;
+    }
+    #drop-zone.hover {
+        border-color: #333;
+    }
+    #image-preview {
+        max-width: 100%;
+        max-height: 100%;
+        margin-bottom: 10px;
+    }
+</style>
+<script>
+    const dropZone = document.getElementById('drop-zone');
+    let imagePreview = null;
+
+    // Prevent default behavior when dropping files
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('hover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('hover');
+    });
+
+    // Handle file drop
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('hover');
+
+        const file = e.dataTransfer.files[0];
+
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                // Remove existing image and button
+                if (imagePreview) {
+                    dropZone.removeChild(imagePreview);
+                    dropZone.removeChild(removeButton);
+                }
+                
+                const image = new Image();
+                image.src = reader.result;
+                image.id = 'image-preview';
+                dropZone.appendChild(image);
+                imagePreview = image;
+
+                // Add remove image button
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove Image';
+                removeButton.addEventListener('click', () => {
+                    dropZone.removeChild(imagePreview);
+                    dropZone.removeChild(removeButton);
+                    imagePreview = null;
+                });
+                dropZone.appendChild(removeButton);
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please drop an image file.');
+        }
+    });
+</script>
+
+</body>
+</html>

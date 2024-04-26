@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Image Preview</title>
+    <style>
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+        }
+
+        .drop-area {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .drop-area.hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>  
+
+    <div class="drop-area" ondragover="handleDragOver(event)" ondragenter="handleDragEnter(event)"
+        ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        Drop images here to preview
+    </div>
+
+    <input type="file" class="image-input" accept="image/*" onchange="previewImage(0)">
+    <img class="image-preview" id="image-preview-0" alt="Image Preview">
+
+    <input type="file" class="image-input" accept="image/*" onchange="previewImage(1)">
+    <img class="image-preview" id="image-preview-1" alt="Image Preview">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> <img
+                        src="https://media.istockphoto.com/id/1418475387/photo/robotic-hand-pressing-a-keyboard-on-a-laptop-3d-rendering.webp?s=1024x1024&w=is&k=20&c=Yxt9_UibZbFSmatyG3RaRqGMXOgIqkXrWzEBsZ5WYIA="
+                        alt="Preview Image"></td>
+                <td> <button onclick="showimage()">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function showimage() {
+            var imageUrl = 'https://media.istockphoto.com/id/1418475387/photo/robotic-hand-pressing-a-keyboard-on-a-laptop-3d-rendering.webp?s=1024x1024&w=is&k=20&c=Yxt9_UibZbFSmatyG3RaRqGMXOgIqkXrWzEBsZ5WYIA=';
+
+            var preview = document.getElementById('image-preview-0');
+            preview.src = imageUrl;
+        }
+
+        function previewImage(index) {
+            var input = document.getElementsByClassName('image-input')[index];
+            var preview = document.getElementById('image-preview-' + index);
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        function handleDragEnter(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.classList.add('hover');
+        }
+
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.classList.remove('hover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.target.classList.remove('hover');
+
+            var files = event.dataTransfer.files;
+
+            // Preview only the first dropped image
+            if (files.length > 0) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var preview = document.getElementById('image-preview-0');
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

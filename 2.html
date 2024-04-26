@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Image Preview</title>
+    <style>
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+        }
+        #drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 300px;
+    height: 200px;
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+  .imageko{
+    width: 500px;
+    height: 400px;
+  }
+    </style>
+</head>
+
+<body>
+<div class="imageko">
+
+    <input type="file" id="drop-zone" class="image-input" accept="image/*" onchange="previewImage(0)" >
+    <img class="image-preview" id="image-preview-0" alt="Image Preview">
+</div>
+<div class="imageko"> 
+
+    <input type="file" id="drop-zone" class="image-input" accept="image/*" onchange="previewImage(1)">
+    <img class="image-preview" id="image-preview-1" alt="Image Preview">
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> <img
+                        src="https://media.istockphoto.com/id/1418475387/photo/robotic-hand-pressing-a-keyboard-on-a-laptop-3d-rendering.webp?s=1024x1024&w=is&k=20&c=Yxt9_UibZbFSmatyG3RaRqGMXOgIqkXrWzEBsZ5WYIA=" />
+                </td>
+                <td> <button onclick="showimage()">Edit</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+    <!-- Add more input elements and images as needed -->
+
+    <script>
+        // function showimage() {
+        //     var imageUrl = 'https://media.istockphoto.com/id/1418475387/photo/robotic-hand-pressing-a-keyboard-on-a-laptop-3d-rendering.webp?s=1024x1024&w=is&k=20&c=Yxt9_UibZbFSmatyG3RaRqGMXOgIqkXrWzEBsZ5WYIA=';
+
+        //     var preview = document.getElementById('image-preview-0');
+        //     preview.src = imageUrl;
+        // }
+        function previewImage(index) {
+            var input = document.getElementsByClassName('image-input')[index];
+            var preview = document.getElementById('image-preview-' + index);
+debugger
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

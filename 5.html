@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Image Preview</title>
+    <style>
+      #drop-zone { 
+  border: 2px dashed #ccc; 
+  padding: 20px; 
+  text-align: center; 
+  cursor: pointer; 
+} 
+ 
+#drop-zone p { 
+  margin: 0; 
+} 
+ 
+#drop-zone.hover { 
+  background-color: #f9f9f9; 
+} 
+    </style>
+</head>
+
+<body>  
+
+    <div id="drop-zone"> 
+        <p>Drag and drop images here or click to browse.</p> 
+        <input type="file" id="file-input" multiple> 
+      </div> 
+
+    <script>
+       const dropZone = document.getElementById('drop-zone'); 
+ 
+ dropZone.addEventListener('dragover', (e) => { 
+   e.preventDefault(); 
+   dropZone.classList.add('hover'); 
+ }); 
+  
+ dropZone.addEventListener('dragleave', () => { 
+   dropZone.classList.remove('hover'); 
+ }); 
+  
+ dropZone.addEventListener('drop', (e) => { 
+   e.preventDefault(); 
+   dropZone.classList.remove('hover'); 
+  
+   const files = e.dataTransfer.files; 
+   handleFiles(files); 
+ }); 
+  
+ const fileInput = document.getElementById('file-input'); 
+  
+ fileInput.addEventListener('change', () => { 
+   const files = fileInput.files; 
+   handleFiles(files); 
+ }); 
+  
+ function handleFiles(files) { 
+   for (const file of files) { 
+     // Perform operations with each file (e.g., upload, preview, etc.) 
+     console.log('Uploading file:', file.name); 
+   } 
+ } 
+    </script>
+
+</body>
+
+</html>

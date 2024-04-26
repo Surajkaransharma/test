@@ -1,111 +1,45 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-    <style>
-        .datepickerdemo md-content {
-            padding-bottom: 200px;
-        }
-        
-        .datepickerdemo .validation-messages {
-            font-size: 11px;
-            color: darkred;
-            margin: 10px 0 0 25px;
-        }
-    </style>
-
-    <script language="javascript">
-        angular
-            .module('firstApplication', ['ngMaterial', 'ngMessages'])
-            .controller('dateController', dateController);
-
-        function dateController($scope) {
-            $scope.myDate = new Date();
-            $scope.minDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() - 2,
-                $scope.myDate.getDate());
-
-            $scope.maxDate = new Date(
-                $scope.myDate.getFullYear(),
-                $scope.myDate.getMonth() + 2,
-                $scope.myDate.getDate());
-
-            $scope.onlyWeekendsPredicate = function(date) {
-                var day = date.getDay();
-                return day === 0 || day === 6;
-            }
-        }
-
-        /// ye teri branch
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiple Image Previews</title>
+  <style>
+    .image-preview {
+      max-width: 100%;
+      max-height: 300px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
+<body>
 
-<body ng-app="firstApplication">
-    <div class="datepickerdemo" ng-controller="dateController as ctrl" layout="column" ng-cloak>
-        <md-content>
-            <h4>Standard Date Picker</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+  <input type="file" class="image-input" accept="image/*">
+  <button onclick="previewImage(0)">Preview Image 1</button>
+  <img class="image-preview" id="image-preview-0" alt="Image Preview">
 
-            <h4>Standard Date Picker 2 Suraj Karan sharma1 </h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+  <input type="file" class="image-input" accept="image/*">
+  <button onclick="previewImage(1)">Preview Image 2</button>
+  <img class="image-preview" id="image-preview-1" alt="Image Preview">
 
+  <!-- Add more input elements and buttons as needed -->
 
-            <h4>Disabled Date Picker kishansssss</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date" disabled></md-datepicker>
+  <script>
+    function previewImage(index) {
+      var input = document.getElementsByClassName('image-input')[index];
+      var preview = document.getElementById('image-preview-' + index);
 
-            <h4>Disabled Date Picker 5</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date" disabled></md-datepicker>
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+        };
 
-            <h4>Date-picker with min and max dates</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 
-            <h4>Date-picker with only selectable weekends</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
-
-            <h4>Date-picker with only selectable weekends in a range</h4>
-            <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
-
-            <h4>Date-picker with validation mesages</h4>
-            <form name="myForm">
-                <md-datepicker name="dateField" ng-model="myDate" md-placeholder="Enter date" required md-min-date="minDate" md-max-date="maxDate" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
-
-                <div class="validation-messages" ng-messages="myForm.dateField.$error">
-                    <div ng-message="valid">The entered value is not a date!</div>
-                    <div ng-message="required">This date is required!</div>
-                    <div ng-message="mindate">Date is too early!</div>
-                    <div ng-message="maxdate">Date is too late!</div>
-                    <div ng-message="filtered">Only weekends are allowed!</div>
-                </div>
-            </form>
-
-        </md-content>
-    </div>
 </body>
-
 </html>
-
-<div class="card-body">
-    <div class="item-card7-desc">
-        <div class="item-card7-text">
-            <a href="javascript:void(0)" class="text-dark">
-                <h4 class="font-weight-semibold">{{p.title}}</h4>
-            </a>
-        </div>
-        <ul class="d-flex mt-2">
-            <li class="">
-                <a href="javascript:void(0)" class="icons">
-                    <i class="icon icon-location-pin text-muted me-1"></i> USA</a>
-            </li>
-
-            <li class=""><a href="javascript:void(0)" class="icons"><i class="icon icon-phone text-muted me-1"></i> 14 675 65</a></li>
-        </ul>
-        <p class="mb-0">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p>
-    </div>
-</div>
